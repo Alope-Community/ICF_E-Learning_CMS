@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\OtpVerificationController;
 use App\Http\Controllers\Auth\TeacherRegisterController;
+use Filament\Pages\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,5 @@ Route::post('/register-teacher', [TeacherRegisterController::class, 'register'])
 
 Route::get('/verify-otp', [OtpVerificationController::class, 'showForm'])->name('auth.verify.otp.form');
 Route::post('/verify-otp', [OtpVerificationController::class, 'verifyOtp'])->name('auth.verify.otp.submit');
+Route::post('/auth/resend-otp', [OtpVerificationController::class, 'resendOtp'])->name('auth.resend.otp');
+

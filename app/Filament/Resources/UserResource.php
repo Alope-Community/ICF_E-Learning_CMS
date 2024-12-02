@@ -21,7 +21,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
@@ -92,31 +92,26 @@ class UserResource extends Resource
 
     protected static function shouldRegisterNavigation(): bool
     {
-        // Hanya tampilkan menu Users untuk admin
         return Filament::auth()->user()?->hasRole('admin');
     }
 
     public static function canViewAny(): bool
     {
-        // Hanya admin yang boleh melihat halaman Users
         return Filament::auth()->user()?->hasRole('admin');
     }
 
     public static function canCreate(): bool
     {
-        // Hanya admin yang boleh menambahkan user
         return Filament::auth()->user()?->hasRole('admin');
     }
 
     public static function canEdit(Model $record): bool
     {
-        // Hanya admin yang boleh mengubah user
         return Filament::auth()->user()?->hasRole('admin');
     }
 
     public static function canDelete(Model $record): bool
     {
-        // Hanya admin yang boleh menghapus user
         return Filament::auth()->user()?->hasRole('admin');
     }
 }

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class OtpVerificationController extends Controller
 {
@@ -18,6 +21,10 @@ class OtpVerificationController extends Controller
     {
         $request->validate([
             'otp' => 'required|numeric|digits:6',
+        ], [
+            'otp.required' => 'OTP wajib diisi.',
+            'otp.numeric' => 'OTP harus berupa angka.',
+            'otp.digits' => 'OTP harus 6 digit.',
         ]);
 
         $user = User::where('otp', $request->otp)->first();
@@ -39,5 +46,38 @@ class OtpVerificationController extends Controller
             ->send();
 
         return redirect('/admin')->with('success', 'Akun berhasil diverifikasi dan Anda telah login.');
+    }
+
+    public function resendOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        $cacheKey = 'otp_resend_' . $request->email;
+        if (Cache::has($cacheKey)) {
+            $remainingTime = Cache::get($cacheKey) - now()->timestamp;
+            return redirect()->back()->with(['error' => "Harap tunggu {$remainingTime} detik sebelum mengirim ulang OTP."]);
+        }
+
+        if ($user->email_verified_at) {
+            return redirect()->route('admin')->with('success', 'Akun Anda sudah terverifikasi.');
+        }
+
+        $otp = rand(100000, 999999);
+        $user->otp = $otp;
+        $user->save();
+
+        try {
+            Mail::to($user->email)->send(new \App\Mail\SendOtpMail($otp));
+
+            Cache::put($cacheKey, now()->timestamp + 60, 60); // 1 menit
+
+            return redirect()->back()->with('success', 'Kode OTP baru telah dikirim ke email Anda.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Gagal mengirim ulang OTP: ' . $e->getMessage()]);
+        }
     }
 }

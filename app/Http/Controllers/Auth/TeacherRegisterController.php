@@ -10,6 +10,7 @@ use App\Mail\OtpMail;
 use App\Mail\SendOtpMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class TeacherRegisterController extends Controller
@@ -57,14 +58,17 @@ class TeacherRegisterController extends Controller
         $user->otp = $otp;
         $user->save();
 
-        Mail::to($user->email)->send(new SendOtpMail($otp));
+        Session::forget('email');
+        Session::put('email', $user->email);
+        Session::save();
 
-        Notification::make()
-            ->title('Verifikasi Email')
-            ->body('Silahkan cek email Anda untuk mendapatkan OTP dan verifikasi akun Anda.')
-            ->warning()
-            ->send();
+        try {
+            Mail::to($user->email)->send(new SendOtpMail($otp));
+        } catch (\Exception $e) {
+            $user->delete();
+            return redirect()->back()->withErrors(['email' => 'Gagal mengirimkan OTP: ' . $e->getMessage()]);
+        }
 
-        return redirect()->route('auth.verify.otp.form')->with('success', 'Pendaftaran Berhasil! Silahkan cek email anda untuk verifikasi.');
+        return redirect()->route('auth.verify.otp.form')->with(['success' => 'Pendaftaran Berhasil! Silahkan cek email anda untuk verifikasi.']);
     }
 }
