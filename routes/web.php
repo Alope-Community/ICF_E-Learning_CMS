@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\OtpVerificationController;
+use App\Http\Controllers\Auth\TeacherRegisterController;
+use Filament\Pages\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/register-teacher', [TeacherRegisterController::class, 'showForm'])->name('register.teacher');
+Route::post('/register-teacher', [TeacherRegisterController::class, 'register'])->name('register.teacher.submit');
+
+Route::get('/verify-otp', [OtpVerificationController::class, 'showForm'])->name('auth.verify.otp.form');
+Route::post('/verify-otp', [OtpVerificationController::class, 'verifyOtp'])->name('auth.verify.otp.submit');
+Route::post('/auth/resend-otp', [OtpVerificationController::class, 'resendOtp'])->name('auth.resend.otp');
+

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -14,13 +15,14 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
@@ -70,5 +72,30 @@ class CategoryResource extends Resource
             'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return Filament::auth()->user()?->hasRole('admin');
+    }
+
+    public static function canViewAny(): bool
+    {
+        return Filament::auth()->user()?->hasRole('admin');
+    }
+
+    public static function canCreate(): bool
+    {
+        return Filament::auth()->user()?->hasRole('admin');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return Filament::auth()->user()?->hasRole('admin');
+    }
+
+    public static function canDelete(Model $record): bool
+    {   
+        return Filament::auth()->user()?->hasRole('admin');
     }
 }

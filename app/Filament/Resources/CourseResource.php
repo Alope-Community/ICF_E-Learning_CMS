@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Resources\CourseResource\RelationManagers;
 use App\Models\Course;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -16,13 +17,14 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CourseResource extends Resource
 {
     protected static ?string $model = Course::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Form $form): Form
     {
@@ -80,5 +82,63 @@ class CourseResource extends Resource
             'view' => Pages\ViewCourse::route('/{record}'),
             'edit' => Pages\EditCourse::route('/{record}/edit'),
         ];
+    }
+
+    protected static function shouldRegisterNavigation(): bool
+    {
+        $user = Filament::auth()->user();
+
+        $user = Filament::auth()->user();
+
+        return $user && (
+            $user->hasRole('admin') ||
+            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        );
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = Filament::auth()->user();
+
+        $user = Filament::auth()->user();
+
+        return $user && (
+            $user->hasRole('admin') ||
+            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        );
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Filament::auth()->user();
+
+        $user = Filament::auth()->user();
+
+        return $user && (
+            $user->hasRole('admin') ||
+            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        );
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        $user = Filament::auth()->user();
+
+        $user = Filament::auth()->user();
+
+        return $user && (
+            $user->hasRole('admin') ||
+            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        );
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        $user = Filament::auth()->user();
+
+        return $user && (
+            $user->hasRole('admin') ||
+            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        );
     }
 }
