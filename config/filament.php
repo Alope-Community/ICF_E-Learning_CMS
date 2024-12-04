@@ -141,6 +141,7 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
+            \App\Filament\Widgets\CountersWidget::class,
             // Widgets\FilamentInfoWidget::class,
         ],
     ],
