@@ -14,7 +14,7 @@ class CourseController extends Controller
     {
         try {
 
-            $courses = Course::get();
+            $courses = Course::with("category")->with("user")->latest()->get();
 
             return response()->json([
                 'code' => 'ICF-001',
@@ -36,7 +36,7 @@ class CourseController extends Controller
     {
         try {
 
-            $course = Course::where('id', $id)->first();
+            $course = Course::with("category")->with("user")->where('slug', $id)->first();
 
             if (!$course) {
                 throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
