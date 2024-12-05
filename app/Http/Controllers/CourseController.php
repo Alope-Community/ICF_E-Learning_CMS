@@ -32,11 +32,11 @@ class CourseController extends Controller
         }
     }
 
-    public function getCourseById($id)
+    public function getCourseById($slug)
     {
         try {
 
-            $course = Course::with("category")->with("user")->where('slug', $id)->first();
+            $course = Course::with("category")->with("user")->whereSlug($slug)->first();
 
             if (!$course) {
                 throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
