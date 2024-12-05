@@ -2,6 +2,8 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Course;
+use App\Models\User;
 use Closure;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
@@ -52,4 +54,5 @@ class Dashboard extends Page
             auth()->user()->hasRole('teacher') && auth()->user()->email_verified_at !== null
         );
     }
+
 }

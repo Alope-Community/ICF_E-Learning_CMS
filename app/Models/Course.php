@@ -12,6 +12,7 @@ class Course extends Model
         'title',
         'slug',
         'category_id',
+        'user_id',
         'description',
         'body',
     ];
@@ -26,6 +27,11 @@ class Course extends Model
     public function submission()
     {
         return $this->hasMany(Submission::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     // public function discussion()

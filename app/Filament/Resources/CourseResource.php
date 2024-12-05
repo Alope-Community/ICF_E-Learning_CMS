@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -34,18 +35,20 @@ class CourseResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('slug')
-                    ->unique()
+                    ->unique(Course::class, 'slug', fn($record) => $record)
                     ->required()
                     ->maxLength(255),
-                Select::make('category_id') // Nama kolom yang sesuai di tabel `courses`
+                Select::make('category_id')
                     ->relationship('category', 'title')
-                    ->label('Category') // Label untuk input
+                    ->label('Category')
                     ->required(),
                 Textarea::make('description')
-                    ->columnSpanFull(),
-                RichEditor::make('body')
                     ->columnSpanFull()
-                    ->extraInputAttributes(['style' => 'min-height: 20rem; max-height: 50vh; overflow-y: auto;'])
+                    ->required(),
+                TiptapEditor::make('body')
+                    ->columnSpanFull()
+                    ->required()
+                    ->extraInputAttributes(['style' => 'min-height: 25rem; overflow-y: auto;']),
             ]);
     }
 
@@ -82,6 +85,18 @@ class CourseResource extends Resource
             'view' => Pages\ViewCourse::route('/{record}'),
             'edit' => Pages\EditCourse::route('/{record}/edit'),
         ];
+    }
+
+    public function mount(): void
+    {
+        $user = Filament::auth()->user();
+
+        $user = Filament::auth()->user();
+
+        abort_unless($user && (
+            $user->hasRole('admin') ||
+            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        ), 403);
     }
 
     protected static function shouldRegisterNavigation(): bool

@@ -90,6 +90,11 @@ class UserResource extends Resource
         ];
     }
 
+    public function mount(): void
+    {
+        abort_unless(auth()->user()?->hasRole('admin'), 403);
+    }
+
     protected static function shouldRegisterNavigation(): bool
     {
         return Filament::auth()->user()?->hasRole('admin');

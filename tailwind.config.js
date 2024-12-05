@@ -4,6 +4,7 @@ import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography' 
 
 export default {
+  darkMode: false,
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/**/*.blade.php",

@@ -35,6 +35,7 @@ class CategoryResource extends Resource
                     ->required()
                     ->maxLength(255)->unique(),
                 Textarea::make('description')
+                    ->required()
                     ->columnSpan('full'),
             ]);
     }
@@ -74,6 +75,11 @@ class CategoryResource extends Resource
         ];
     }
 
+    public function mount(): void
+    {
+        abort_unless(auth()->user()?->hasRole('admin'), 403);
+    }
+
     protected static function shouldRegisterNavigation(): bool
     {
         return Filament::auth()->user()?->hasRole('admin');
@@ -95,7 +101,7 @@ class CategoryResource extends Resource
     }
 
     public static function canDelete(Model $record): bool
-    {   
+    {
         return Filament::auth()->user()?->hasRole('admin');
     }
 }
