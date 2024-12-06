@@ -30,31 +30,33 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(Authenticated::class, function ($event) {
-            
-            Session::put('email', $event->user->email);
-            
-            if (!Session::has('login_notified')) {
-                if ($event->user->hasRole('teacher') && $event->user->email_verified_at == null) {
-                    Notification::make()
-                        ->title('Akun anda belum terverifikasi')
-                        ->body('Silahkan verifikasi akun Anda terlebih dahulu.')
-                        ->warning()
-                        ->actions([
-                            Action::make('Verifikasi')
-                            ->button()
-                            ->url(route('auth.verify.otp.form'))
-                        ])
-                        ->persistent()
-                        ->send();
-                } else {
-                    Notification::make()
-                        ->title('Login Berhasil')
-                        ->body('Selamat datang kembali, ' . $event->user->name . '!')
-                        ->success()
-                        ->send();
-                }
 
-                Session::put('login_notified', true);
+            if (!$event->user->hasRole('student')) {
+                Session::put('email', $event->user->email);
+
+                if (!Session::has('login_notified')) {
+                    if ($event->user->hasRole('teacher') && $event->user->email_verified_at == null) {
+                        Notification::make()
+                            ->title('Akun anda belum terverifikasi')
+                            ->body('Silahkan verifikasi akun Anda terlebih dahulu.')
+                            ->warning()
+                            ->actions([
+                                Action::make('Verifikasi')
+                                    ->button()
+                                    ->url(route('auth.verify.otp.form'))
+                            ])
+                            ->persistent()
+                            ->send();
+                    } else {
+                        Notification::make()
+                            ->title('Login Berhasil')
+                            ->body('Selamat datang kembali, ' . $event->user->name . '!')
+                            ->success()
+                            ->send();
+                    }
+
+                    Session::put('login_notified', true);
+                }
             }
         });
     }

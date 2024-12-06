@@ -35,7 +35,11 @@ class SubmissionResource extends Resource
                     ->columnSpanFull()
                     ->required(),
                 Select::make('course_id')
-                    ->relationship('course', 'title')
+                    ->relationship('course', 'title', function ($query) {
+                        /** @var \App\Models\User */
+                        $user = auth()->user();
+                        $user->hasRole('teacher') && $query->where('user_id', auth()->id());
+                    })
                     ->label('From Course')
                     ->required(),
             ]);
@@ -86,9 +90,8 @@ class SubmissionResource extends Resource
 
     public function mount(): void
     {
-        $user = Filament::auth()->user();
-
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         abort_unless($user && (
             $user->hasRole('admin') ||
@@ -98,9 +101,8 @@ class SubmissionResource extends Resource
 
     protected static function shouldRegisterNavigation(): bool
     {
-        $user = Filament::auth()->user();
-
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         return $user && (
             $user->hasRole('admin') ||
@@ -110,21 +112,22 @@ class SubmissionResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
-        $user = Filament::auth()->user();
+        if ($user->hasRole('admin')) {
+            return true;
+        }
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        return $user && $user->email_verified_at !== null && (
+            $user->hasRole('teacher') || $user->hasRole('admin')
         );
     }
 
     public static function canCreate(): bool
     {
-        $user = Filament::auth()->user();
-
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         return $user && (
             $user->hasRole('admin') ||
@@ -134,9 +137,8 @@ class SubmissionResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        $user = Filament::auth()->user();
-
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         return $user && (
             $user->hasRole('admin') ||
@@ -146,7 +148,8 @@ class SubmissionResource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         return $user && (
             $user->hasRole('admin') ||

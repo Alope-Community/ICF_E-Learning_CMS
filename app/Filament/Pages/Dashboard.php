@@ -2,11 +2,13 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\CountersWidget;
 use App\Models\Course;
 use App\Models\User;
 use Closure;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
+use Filament\Widgets\AccountWidget;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -25,7 +27,7 @@ class Dashboard extends Page
 
     protected function getWidgets(): array
     {
-        return Filament::getWidgets();
+        return [AccountWidget::class, CountersWidget::class];
     }
 
     protected function getColumns(): int | string | array
