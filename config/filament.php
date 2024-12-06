@@ -87,7 +87,7 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
-            'login' => \Filament\Http\Livewire\Auth\Login::class,
+            'login' => \App\Http\Livewire\Auth\Login::class,
         ],
     ],
 
@@ -334,12 +334,6 @@ return [
             DispatchServingFilamentEvent::class,
             MirrorConfigToSubpackages::class,
         ],
-        function ($request, $next) {
-            if (auth()->check() && !auth()->user()->hasRole(['admin', 'teacher'])) {
-                abort(403, 'You are not authorized to access this dashboard.');
-            }
-            return $next($request);
-        },
     ],
 
 ];
