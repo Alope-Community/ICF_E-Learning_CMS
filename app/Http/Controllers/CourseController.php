@@ -6,15 +6,15 @@ use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function getCourse()
+    public function index(Request $request)
     {
         try {
+            $limit = $request->input('limit', 10);
 
-            $courses = Course::with("category")->with("user")->latest()->get();
+            $courses = Course::with("category")->with("user")->latest()->paginate($limit);
 
             return response()->json([
                 'code' => 'ICF-001',
@@ -32,7 +32,7 @@ class CourseController extends Controller
         }
     }
 
-    public function getCourseById($slug)
+    public function show(string $slug)
     {
         try {
 
