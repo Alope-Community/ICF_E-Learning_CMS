@@ -12,9 +12,16 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         try {
+            $search = $request->input('search', "");
             $limit = $request->input('limit', 10);
 
-            $courses = Course::with("category")->with("user")->latest()->paginate($limit);
+            $courses = Course::with("category")
+                ->with("user")
+                ->when($search, function ($query, $search) {
+                $query->where('title', 'like', "%$search%");
+            })
+            ->latest()
+            ->paginate($limit);
 
             return response()->json([
                 'code' => 'ICF-001',
