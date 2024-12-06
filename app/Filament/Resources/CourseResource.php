@@ -7,6 +7,7 @@ use App\Filament\Resources\CourseResource\RelationManagers;
 use App\Models\Course;
 use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -41,6 +42,17 @@ class CourseResource extends Resource
                 Select::make('category_id')
                     ->relationship('category', 'title')
                     ->label('Category')
+                    ->required(),
+                Select::make('students')
+                    ->relationship('users', 'name', function ($query) {
+                        $query->whereHas('roles', function ($roleQuery) {
+                            $roleQuery->where('name', 'student');
+                        });
+                    })
+                    ->label('Daftar Siswa')
+                    ->columns(2)
+                    ->multiple()
+                    ->helperText('Pilih siswa yang dapat mengikuti kelas.')
                     ->required(),
                 Textarea::make('description')
                     ->columnSpanFull()
@@ -87,73 +99,77 @@ class CourseResource extends Resource
         ];
     }
 
-    public function mount(): void
+    public static function canViewAny(): bool
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
-
-        abort_unless($user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        ), 403);
+        return ($user->hasRole('admin') || ($user->hasRole('teacher') && $user->email_verified_at !== null));
     }
 
     protected static function shouldRegisterNavigation(): bool
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
-
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+        return ($user->hasRole('admin') || ($user->hasRole('teacher') && $user->email_verified_at !== null));
     }
 
-    public static function canViewAny(): bool
+    public static function getEloquentQuery(): Builder
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
+        // Admin dapat melihat semua course
+        if ($user->hasRole('admin')) {
+            return parent::getEloquentQuery();
+        }
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+        // User hanya melihat course miliknya
+        return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
-    public static function canCreate(): bool
+    public static function canView(Model $record): bool
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
+        // Admin dapat melihat semua course
+        if ($user->hasRole('admin')) {
+            return true;
+        }
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+        // Pemilik course dapat melihatnya
+        return $record->user_id === $user->id;
     }
 
     public static function canEdit(Model $record): bool
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
+        // Admin dapat mengedit semua course
+        if ($user->hasRole('admin')) {
+            return true;
+        }
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+        // Pemilik course dapat mengeditnya
+        return $record->user_id === $user->id;
     }
 
     public static function canDelete(Model $record): bool
     {
         $user = Filament::auth()->user();
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+        // Admin dapat menghapus semua course
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // Pemilik course dapat menghapusnya
+        return $record->user_id === $user->id;
+    }
+
+    public static function canCreate(): bool
+    {
+        $user = Filament::auth()->user();
+
+        // Admin atau Teacher dapat membuat course
+        return $user && ($user->hasRole('admin') || $user->hasRole('teacher') && $user->email_verified_at !== null);
     }
 }

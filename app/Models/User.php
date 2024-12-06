@@ -46,7 +46,7 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
-     /**
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -69,5 +69,10 @@ class User extends Authenticatable implements JWTSubject
     public function course()
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_users', 'user_id', 'course_id');
     }
 }
