@@ -34,10 +34,14 @@ class CourseResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, $set) {
+                        $set('slug', \Illuminate\Support\Str::slug($state));
+                    })
                     ->maxLength(255),
                 TextInput::make('slug')
                     ->unique(Course::class, 'slug', fn($record) => $record)
-                    ->required()
+                    ->disabled()
                     ->maxLength(255),
                 Select::make('category_id')
                     ->relationship('category', 'title')

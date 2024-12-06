@@ -30,9 +30,13 @@ class CategoryResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('slug', \Illuminate\Support\Str::slug($state));
+                    })
                     ->maxLength(255),
                 TextInput::make('slug')
-                    ->required()
+                    ->disabled()
                     ->maxLength(255)->unique(),
                 Textarea::make('description')
                     ->required()
