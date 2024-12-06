@@ -35,7 +35,9 @@ class SubmissionResource extends Resource
                     ->columnSpanFull()
                     ->required(),
                 Select::make('course_id')
-                    ->relationship('course', 'title')
+                    ->relationship('course', 'title', function ($query) {
+                        auth()->user()->hasRole('teacher') && $query->where('user_id', auth()->id());
+                    })
                     ->label('From Course')
                     ->required(),
             ]);
@@ -88,8 +90,6 @@ class SubmissionResource extends Resource
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
-
         abort_unless($user && (
             $user->hasRole('admin') ||
             ($user->hasRole('teacher') && $user->email_verified_at !== null)
@@ -98,8 +98,6 @@ class SubmissionResource extends Resource
 
     protected static function shouldRegisterNavigation(): bool
     {
-        $user = Filament::auth()->user();
-
         $user = Filament::auth()->user();
 
         return $user && (
@@ -112,11 +110,12 @@ class SubmissionResource extends Resource
     {
         $user = Filament::auth()->user();
 
-        $user = Filament::auth()->user();
+        if ($user->hasRole('admin')) {
+            return true;
+        }
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
+        return $user && $user->email_verified_at !== null && (
+            $user->hasRole('teacher') || $user->hasRole('admin')
         );
     }
 
