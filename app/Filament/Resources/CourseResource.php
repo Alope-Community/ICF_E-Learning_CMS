@@ -105,21 +105,24 @@ class CourseResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         return ($user->hasRole('admin') || ($user->hasRole('teacher') && $user->email_verified_at !== null));
     }
 
     protected static function shouldRegisterNavigation(): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         return ($user->hasRole('admin') || ($user->hasRole('teacher') && $user->email_verified_at !== null));
     }
 
     public static function getEloquentQuery(): Builder
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         // Admin dapat melihat semua course
         if ($user->hasRole('admin')) {
@@ -132,7 +135,8 @@ class CourseResource extends Resource
 
     public static function canView(Model $record): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         // Admin dapat melihat semua course
         if ($user->hasRole('admin')) {
@@ -145,7 +149,8 @@ class CourseResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         // Admin dapat mengedit semua course
         if ($user->hasRole('admin')) {
@@ -158,7 +163,8 @@ class CourseResource extends Resource
 
     public static function canDelete(Model $record): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         // Admin dapat menghapus semua course
         if ($user->hasRole('admin')) {
@@ -171,7 +177,8 @@ class CourseResource extends Resource
 
     public static function canCreate(): bool
     {
-        $user = Filament::auth()->user();
+        /** @var \App\Models\User */
+        $user = auth()->user();
 
         // Admin atau Teacher dapat membuat course
         return $user && ($user->hasRole('admin') || $user->hasRole('teacher') && $user->email_verified_at !== null);

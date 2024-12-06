@@ -81,31 +81,43 @@ class CategoryResource extends Resource
 
     public function mount(): void
     {
-        abort_unless(auth()->user()?->hasRole('admin'), 403);
+        /** @var \App\Models\User */
+        $user = auth()->user();
+        abort_unless($user->hasRole('admin'), 403);
     }
 
     protected static function shouldRegisterNavigation(): bool
     {
-        return Filament::auth()->user()?->hasRole('admin');
+        /** @var \App\Models\User */
+        $user = auth()->user();
+        return $user->hasRole('admin');
     }
 
     public static function canViewAny(): bool
     {
-        return Filament::auth()->user()?->hasRole('admin');
+        /** @var \App\Models\User */
+        $user = auth()->user();
+        return $user->hasRole('admin');
     }
 
     public static function canCreate(): bool
     {
-        return Filament::auth()->user()?->hasRole('admin');
+        /** @var \App\Models\User */
+        $user = auth()->user();
+        return $user->hasRole('admin');
     }
 
     public static function canEdit(Model $record): bool
     {
-        return Filament::auth()->user()?->hasRole('admin');
+        /** @var \App\Models\User */
+        $user = auth()->user();
+        return $user->hasRole('admin');
     }
 
     public static function canDelete(Model $record): bool
     {
-        return Filament::auth()->user()?->hasRole('admin');
+        /** @var \App\Models\User */
+        $user = auth()->user();
+        return $user->hasRole('admin');
     }
 }

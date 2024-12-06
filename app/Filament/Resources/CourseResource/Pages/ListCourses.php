@@ -22,7 +22,10 @@ class ListCourses extends ListRecords
     {
         $query = parent::getTableQuery();
         
-        if (auth()->user()->hasRole('teacher')) {
+        /** @var \App\Models\User */
+        $user = auth()->user();
+
+        if ($user->hasRole('teacher')) {
             $query->where('user_id', auth()->id());
         }
     
