@@ -21,11 +21,17 @@ class RolePermissionSeeder extends Seeder
         $manageAll = Permission::firstOrCreate(['name' => 'manage all']);
         $manageClass = Permission::firstOrCreate(['name' => 'manage class']);
 
-        $user = \App\Models\User::where('name', 'mrfatra')->first();
+        $adminUser = \App\Models\User::where('name', 'im admin')->first();
+        $teacherUser = \App\Models\User::where('name', 'im teacher')->first();
+        $studentUser = \App\Models\User::where('name', 'im student')->first();
+        
+        $teacherUnverified = \App\Models\User::where('name', 'teacher unverified')->first();
 
-        if ($user) {
-            $user->assignRole('admin');
-        }
+        $adminUser->assignRole('admin');
+        $teacherUser->assignRole('teacher');
+        $studentUser->assignRole('student');
+
+        $teacherUnverified->assignRole('teacher');
 
         $adminRole->givePermissionTo($manageAll);
         $teacherRole->givePermissionTo($manageClass);

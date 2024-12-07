@@ -56,8 +56,7 @@ class CourseResource extends Resource
                     ->label('Daftar Siswa')
                     ->columns(2)
                     ->multiple()
-                    ->helperText('Pilih siswa yang dapat mengikuti kelas.')
-                    ->required(),
+                    ->helperText('Pilih siswa yang dapat mengikuti kelas.'),
                 Textarea::make('description')
                     ->columnSpanFull()
                     ->required(),
