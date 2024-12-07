@@ -34,6 +34,18 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
+                    Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->beforeStateDehydrated(function ($state) {
+                        logger('Before State: ', [$state]);
+                        return $state['password'] ?? '';
+                    })
+                    ->afterStateUpdated(function ($state) {
+                        logger('Password updated: ', [$state]);
+                    })
+                    ->view('components.password-field')
+                    ->maxLength(255),
                 Forms\Components\Select::make('roles')
                     ->multiple()
                     ->relationship('roles', 'name')
@@ -134,7 +146,7 @@ class UserResource extends Resource
     {
         /** @var \App\Models\User */
         $user = auth()->user();
-        
+
         return $user->hasRole('admin');
     }
 }
