@@ -9,10 +9,12 @@ use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         try {
 
-            $categories = Category::latest()->get();
+            $limit = $request->input('limit', 1000);
+
+            $categories = Category::limit($limit)->latest()->get();
 
             return response()->json([
                 'code' => 'ICF-001',
