@@ -13,15 +13,21 @@ class CourseController extends Controller
     {
         try {
             $search = $request->input('search', "");
+            $category = $request->input('category', "");
             $limit = $request->input('limit', 10);
 
             $courses = Course::with("category")
                 ->with("user")
                 ->when($search, function ($query, $search) {
-                $query->where('title', 'like', "%$search%");
-            })
-            ->latest()
-            ->paginate($limit);
+                    $query->where('title', 'like', "%$search%");
+                })
+                ->when($category, function ($query, $category) {
+                    $query->whereHas('category', function ($q) use ($category) {
+                        $q->where('slug', 'like', "%$category%");
+                    });
+                })
+                ->latest()
+                ->paginate($limit);
 
             return response()->json([
                 'code' => 'ICF-001',
