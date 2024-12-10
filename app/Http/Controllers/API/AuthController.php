@@ -27,7 +27,11 @@ class AuthController extends Controller
         $user = auth()->guard('api')->user();
     
         // Menambahkan klaim kustom
-        $customClaims = ['id' => $user->id];
+        $customClaims = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ];
         $token = JWTAuth::claims($customClaims)->fromUser($user);
     
         return response()->json([
