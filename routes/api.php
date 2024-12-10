@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\CourseController;
 // use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
@@ -29,4 +30,6 @@ Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 Route::post('/join-course', [CourseController::class, 'join']);
 Route::post('/leave-course', [CourseController::class, 'leave']);
+
+Route::get('/dashboard', DashboardController::class);
 
