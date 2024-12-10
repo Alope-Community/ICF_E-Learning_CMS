@@ -13,6 +13,7 @@ class Submission extends Model
         'course_id',
         'title',
         'description',
+        'deadline',
     ];
 
     public function course()

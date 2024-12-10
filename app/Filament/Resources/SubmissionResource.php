@@ -42,6 +42,9 @@ class SubmissionResource extends Resource
                     })
                     ->label('From Course')
                     ->required(),
+                Forms\Components\DateTimePicker::make('deadline')
+                    ->format('Y-m-d H:i')
+                    ->timezone('Asia/Jakarta')
             ]);
     }
 
@@ -54,10 +57,9 @@ class SubmissionResource extends Resource
                     ->limit(30)
                     ->tooltip(fn($record) => $record->description),
                 Tables\Columns\TextColumn::make('course.title'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('deadline')
+                    ->dateTime()
+                    ->placeholder('-')
             ])
             ->filters([
                 //
