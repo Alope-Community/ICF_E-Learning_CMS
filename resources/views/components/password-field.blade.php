@@ -4,13 +4,29 @@
         {{-- Field --}}
         <label for="password"
             class="filament-forms-field-wrapper-label inline-flex items-center space-x-3 rtl:space-x-reverse">
-            <span class="text-sm font-medium leading-4 text-gray-700">Password
-                <sup class="text-danger-700 whitespace-nowrap font-medium">*</sup>
-            </span>
+            <span class="text-sm font-medium leading-4 text-gray-700">Password</span>
         </label>
-        <input id="data.password" name="data.password" wire:model.defer="data.password" dusk="filament.forms.data.password" :type="show ? 'text' : 'password'"
+        {{-- <input id="data.password" name="data.password" wire:model.defer="data.password"
+            dusk="filament.forms.data.password" :type="show ? 'text' : 'password'"
             style="border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));"
-            {{ $attributes->merge(['class' => 'w-full rounded-md py-2 px-2.5 focus:ring-2 focus:ring-indigo-500 shadow-sm']) }}>
+            {{ $attributes->merge(['class' => 'w-full rounded-md py-2 px-2.5 focus:ring-2 focus:ring-indigo-500 shadow-sm']) }}> --}}
+
+        <input x-data="{}" wire:model.defer="data.password" type="text" dusk="filament.forms.data.password"
+            id="data.password" maxlength="255"
+            class="filament-forms-input block w-full rounded-lg shadow-sm outline-none transition duration-75 focus:ring-1 focus:ring-inset disabled:opacity-70 border-gray-300 focus:border-primary-500 focus:ring-primary-500"
+            x-bind:class="{
+                'border-gray-300 focus:border-primary-500 focus:ring-primary-500': !(
+                    'data.password' in $wire.__instance.serverMemo.errors
+                ),
+                'dark:border-gray-600 dark:focus:border-primary-500':
+                    !('data.password' in $wire.__instance.serverMemo.errors) && false,
+                'border-danger-600 ring-danger-600 focus:border-danger-500 focus:ring-danger-500': 'data.password' in
+                    $wire
+                    .__instance.serverMemo.errors,
+                'dark:border-danger-400 dark:ring-danger-400 dark:focus:border-danger-500 dark:focus:ring-danger-500': 'data.password' in
+                    $wire.__instance.serverMemo.errors && false,
+            }">
+
 
         {{-- Error --}}
         @error('password')

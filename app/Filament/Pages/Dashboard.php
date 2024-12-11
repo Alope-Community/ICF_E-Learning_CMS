@@ -49,11 +49,14 @@ class Dashboard extends Page
 
     public function isEmailVerified(): bool
     {
+        /** @var \App\Models\User */
+        $user = auth()->user();
+
         Session::put('email', auth()->user()->email);
 
         return auth()->check() && (
-            auth()->user()->hasRole('admin') ||
-            auth()->user()->hasRole('teacher') && auth()->user()->email_verified_at !== null
+            $user->hasRole('admin') ||
+            $user->hasRole('teacher') && auth()->user()->email_verified_at !== null
         );
     }
 

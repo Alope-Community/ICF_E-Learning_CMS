@@ -72,6 +72,12 @@ class CourseResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->limit(30)
+                    ->tooltip(fn($record) => $record->description),
+                TextColumn::make('category.title'),
+                Tables\Columns\TextColumn::make('description')
+                    ->limit(30)
+                    ->tooltip(fn($record) => $record->description),
             ])
             ->filters([
                 //

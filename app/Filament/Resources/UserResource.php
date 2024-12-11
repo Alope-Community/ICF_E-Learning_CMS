@@ -34,18 +34,8 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->beforeStateDehydrated(function ($state) {
-                        logger('Before State: ', [$state]);
-                        return $state['password'] ?? '';
-                    })
-                    ->afterStateUpdated(function ($state) {
-                        logger('Password updated: ', [$state]);
-                    })
-                    ->view('components.password-field')
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->password(),
                 Forms\Components\Select::make('roles')
                     ->multiple()
                     ->relationship('roles', 'name')
@@ -79,6 +69,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -97,6 +88,7 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
+            'view' => Pages\ViewUser::route('/{record}'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];

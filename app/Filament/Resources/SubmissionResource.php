@@ -60,6 +60,11 @@ class SubmissionResource extends Resource
                 Tables\Columns\TextColumn::make('deadline')
                     ->dateTime()
                     ->placeholder('-')
+                    ->formatStateUsing(function ($state) {
+                        return $state
+                            ? \Carbon\Carbon::parse($state)->translatedFormat('l, d F Y - H:i')
+                            : '-';
+                    }),
             ])
             ->filters([
                 //

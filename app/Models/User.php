@@ -46,6 +46,18 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($user) {
+            if (empty($user->password)) {
+                unset($user->password);
+            }
+        });
+    }
+
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

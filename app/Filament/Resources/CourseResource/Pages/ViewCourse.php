@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\CourseResource\Pages;
 
 use App\Filament\Resources\CourseResource;
+use App\Filament\Resources\CourseResource\Widgets\CourseOverview;
 use App\Filament\Widgets\CountersWidget;
-use App\Filament\Widgets\CourseWidget;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -24,7 +24,7 @@ class ViewCourse extends ViewRecord
     protected function getHeaderWidgets(): array
     {
         return [
-            CourseWidget::class,
+            CourseOverview::class,
         ];
     }
 

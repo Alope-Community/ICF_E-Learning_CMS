@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\CourseResource\Widgets;
 
 use App\Models\Course;
 use Filament\Widgets\Widget;
-use Illuminate\Contracts\View\View;
 
-class CourseWidget extends Widget
+class CourseOverview extends Widget
 {
-    protected static string $view = 'filament.widgets.course-widget';
+    protected static string $view = 'filament.resources.course-resource.widgets.course-overview';
 
     public $course;
-
 
     public function getColumnSpan(): int|string|array
     {

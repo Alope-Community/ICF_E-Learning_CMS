@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Filament\Resources\SubmissionResource\Pages;
+namespace App\Filament\Resources\UserResource\Pages;
 
-use App\Filament\Resources\SubmissionResource;
-use App\Filament\Resources\SubmissionResource\Widgets\SubmissionOverview;
+use App\Filament\Resources\UserResource;
+use App\Filament\Resources\UserResource\Widgets\UserOverview;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewSubmission extends ViewRecord
+class ViewUser extends ViewRecord
 {
-    protected static string $resource = SubmissionResource::class;
+    protected static string $resource = UserResource::class;
 
     protected function getTitle(): string
     {
-        return $this->record->title;
+        return 'User Overview';
     }
 
     protected function getHeaderWidgets(): array
     {
         return [
-            SubmissionOverview::class,
+            UserOverview::class,
         ];
     }
 
@@ -34,5 +34,4 @@ class ViewSubmission extends ViewRecord
     {
         return [];
     }
-    
 }

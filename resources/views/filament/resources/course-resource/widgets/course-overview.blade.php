@@ -6,9 +6,17 @@
                 <div class="text-sm font-medium text-gray-600 uppercase">
                     Category:
                 </div>
-                <div class="text-lg font-semibold text-indigo-600">
-                    {{ $course->category->title }}
-                </div>
+                @if (auth()->user()->hasRole('admin'))
+                    <a href="{{ route('filament.resources.categories.view', ['record' => $course->category->id]) }}">
+                        <div class="font-medium bg-indigo-500 text-white py-1 px-3 rounded-full">
+                            {{ $course->category->title }}
+                        </div>
+                    </a>
+                @else
+                    <div class="font-medium bg-indigo-500 text-white py-1 px-3 rounded-full">
+                        {{ $course->category->title }}
+                    </div>
+                @endif
             </div>
 
             <!-- Course Description -->
