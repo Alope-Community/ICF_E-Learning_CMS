@@ -24,12 +24,14 @@ class RolePermissionSeeder extends Seeder
         $adminUser = \App\Models\User::where('name', 'im admin')->first();
         $teacherUser = \App\Models\User::where('name', 'im teacher')->first();
         $studentUser = \App\Models\User::where('name', 'im student')->first();
+        $studentUser2 = \App\Models\User::where('name', 'im student 2')->first();
         
         $teacherUnverified = \App\Models\User::where('name', 'teacher unverified')->first();
 
         $adminUser->assignRole('admin');
         $teacherUser->assignRole('teacher');
         $studentUser->assignRole('student');
+        $studentUser2->assignRole('student');
 
         $teacherUnverified->assignRole('teacher');
 

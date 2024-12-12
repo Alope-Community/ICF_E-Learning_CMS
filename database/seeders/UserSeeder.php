@@ -40,6 +40,14 @@ class UserSeeder extends Seeder
             ],
         );
 
+        $student2 = User::firstOrCreate(
+            ['name' => 'im student 2'],
+            [
+                'email' => 'student2@gmail.com',
+                'password' => bcrypt('foobarrr'),
+            ],
+        );
+
         $teacherUnverified = User::firstOrCreate(
             ['name' => 'teacher unverified'],
             [
