@@ -29,8 +29,15 @@ class SubmissionResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
-                    ->columnSpanFull()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, $set) {
+                        $set('slug', \Illuminate\Support\Str::slug($state));
+                    })
                     ->required(),
+                TextInput::make('slug')
+                    ->unique(Submission::class, 'slug', fn($record) => $record)
+                    ->disabled()
+                    ->maxLength(255),
                 Textarea::make('description')
                     ->columnSpanFull()
                     ->required(),
