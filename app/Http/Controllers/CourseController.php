@@ -3,18 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function getCourse()
+    public function index(Request $request)
     {
         try {
+            $search = $request->input('search', "");
+            $category = $request->input('category', "");
+            $limit = $request->input('limit', 10);
 
-            $courses = Course::with("category")->with("user")->latest()->get();
+            $courses = Course::with("category")
+                ->with("user")
+                ->when($search, function ($query, $search) {
+                    $query->where('title', 'like', "%$search%");
+                })
+                ->when($category, function ($query, $category) {
+                    $query->whereHas('category', function ($q) use ($category) {
+                        $q->where('slug', 'like', "%$category%");
+                    });
+                })
+                ->latest()
+                ->paginate($limit);
 
             return response()->json([
                 'code' => 'ICF-001',
@@ -32,8 +46,9 @@ class CourseController extends Controller
         }
     }
 
-    public function getCourseById($slug)
+    public function show(Request $request, string $slug)
     {
+
         try {
 
             $course = Course::with("category")->with("user")->whereSlug($slug)->first();
@@ -42,11 +57,16 @@ class CourseController extends Controller
                 throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
             }
 
+            $exists = $course->users()->wherePivot('user_id', $request->user_id)->exists();
+
             return response()->json([
-                'code' => 'ICF-002',
+                'code' => 'ICF-001',
                 'success' => true,
                 'message' => 'Get Course By ID Completed.',
-                'result' => $course,
+                'result' => [
+                    "data" => $course,
+                    "haveJoined" => $exists
+                ],
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([
@@ -56,5 +76,63 @@ class CourseController extends Controller
                 'result' => null,
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    public function join(Request $request)
+    {
+        try {
+            $course = Course::find($request->course_id);
+            $userID = $request->user_id;
+    
+            $course->users()->attach($userID);
+
+            if (!$course) {
+                throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
+            }
+
+            return response()->json([
+                'code' => 'ICF-001',
+                'success' => true,
+                'message' => 'Join to Course Success',
+                'result' => $course,
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'code' => 'ICF-002',
+                'success' => false,
+                'message' => 'Join to Course Failed: ' . $e->getMessage(),
+                'result' => null,
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
+    
+    public function leave(Request $request)
+    {
+        try {
+            $course = Course::find($request->course_id);
+            $userID = $request->user_id;
+    
+            $course->users()->detach($userID);
+
+            if (!$course) {
+                throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
+            }
+
+            return response()->json([
+                'code' => 'ICF-001',
+                'success' => true,
+                'message' => 'Join to Course Success',
+                'result' => $course,
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'code' => 'ICF-002',
+                'success' => false,
+                'message' => 'Join to Course Failed: ' . $e->getMessage(),
+                'result' => null,
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
