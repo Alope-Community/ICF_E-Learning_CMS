@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -51,7 +51,7 @@ class CourseController extends Controller
 
         try {
 
-            $course = Course::with("category")->with("user")->whereSlug($slug)->first();
+            $course = Course::with("category")->with("submission")->with("user")->whereSlug($slug)->first();
 
             if (!$course) {
                 throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
