@@ -52,7 +52,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password'  => 'required|string|min:8',
-            'password_confirmation' => 'required|string|same:password',
+            'confirmPassword' => 'required|string|same:password',
         ]);
         
         if ($validator->fails()) {
