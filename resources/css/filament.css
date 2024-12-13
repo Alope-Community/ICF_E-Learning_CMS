@@ -1,2 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Parkinsans:wght@300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sora:wght@100..800&display=swap');
 @import '../../vendor/filament/filament/resources/css/app.css';
+
+@layer base {
+    input[type=range] {
+        @apply appearance-none bg-transparent;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        @apply bg-primary-300 rounded-full;
+        height: 8px;
+    }
+
+    input[type=range]::-moz-range-track {
+        @apply bg-primary-300 rounded-full;
+        height: 8px;
+    }
+
+    input[type=range]::-ms-track {
+        @apply bg-primary-300 rounded-full;
+        height: 8px;
+        border-color: transparent;
+        background-color: transparent;
+        border-width: 0;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        @apply bg-white border-primary-500 rounded-lg appearance-none h-8 w-8 cursor-grab active:cursor-grabbing;
+        border: 3px solid rgb(99 102 241 / var(--tw-border-opacity, 1));
+        margin-top: -12px;
+    }
+
+    input[type=range]::-moz-range-thumb {
+        @apply bg-white rounded-lg appearance-none h-8 w-8 cursor-grab active:cursor-grabbing;
+        border: 3px solid rgb(99 102 241 / var(--tw-border-opacity, 1));
+        margin-top: -12px;
+    }
+
+    input[type=range]::-ms-thumb {
+        @apply bg-white rounded-lg appearance-none h-8 w-8 cursor-grab active:cursor-grabbing;
+        border: 3px solid rgb(99 102 241 / var(--tw-border-opacity, 1));
+        margin-top: -12px;
+    }
+}

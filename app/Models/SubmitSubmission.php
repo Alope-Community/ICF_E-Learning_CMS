@@ -13,6 +13,7 @@ class SubmitSubmission extends Model
         'submission_id',
         'file',
         'body',
+        'grade',
         'user_id',
     ];
 

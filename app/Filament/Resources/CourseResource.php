@@ -79,9 +79,7 @@ class CourseResource extends Resource
                     ->limit(30)
                     ->tooltip(fn($record) => $record->description),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -93,9 +91,7 @@ class CourseResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -129,12 +125,12 @@ class CourseResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        // Admin dapat melihat semua course
+
         if ($user->hasRole('admin')) {
             return parent::getEloquentQuery();
         }
 
-        // User hanya melihat course miliknya
+
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
@@ -143,12 +139,12 @@ class CourseResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        // Admin dapat melihat semua course
+
         if ($user->hasRole('admin')) {
             return true;
         }
 
-        // Pemilik course dapat melihatnya
+
         return $record->user_id === $user->id;
     }
 
@@ -157,12 +153,12 @@ class CourseResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        // Admin dapat mengedit semua course
+
         if ($user->hasRole('admin')) {
             return true;
         }
 
-        // Pemilik course dapat mengeditnya
+
         return $record->user_id === $user->id;
     }
 
@@ -171,12 +167,12 @@ class CourseResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        // Admin dapat menghapus semua course
+
         if ($user->hasRole('admin')) {
             return true;
         }
 
-        // Pemilik course dapat menghapusnya
+
         return $record->user_id === $user->id;
     }
 
@@ -185,7 +181,7 @@ class CourseResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        // Admin atau Teacher dapat membuat course
+
         return $user && ($user->hasRole('admin') || $user->hasRole('teacher') && $user->email_verified_at !== null);
     }
 }
