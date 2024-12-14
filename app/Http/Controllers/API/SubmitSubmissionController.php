@@ -10,10 +10,35 @@ use Illuminate\Http\Response;
 
 class SubmitSubmissionController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function index(Request $request)
+    {
+        try {
+            $SubmitSubmissions = SubmitSubmission::whereUserId($request->user_id)
+                ->whereHas('submission', function ($query) use ($request) {
+                    $query->whereHas('course', function ($query) use ($request) {
+                        $query->where('slug', $request->course_slug); // Filter berdasarkan course_id
+                    });
+                })
+                ->get();
+
+
+            return response()->json([
+                'code' => 'ICF-001',
+                'success' => true,
+                'message' => 'Get Submit Submission Success',
+                'result' => $SubmitSubmissions,
+            ], Response::HTTP_OK);
+        } catch(Error $e){
+            return response()->json([
+                'code' => 'ICF-002',
+                'success' => false,
+                'message' => 'Get Submit Submission Failed: ' . $e->getMessage(),
+                'result' => null,
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function submit(Request $request)
     {
         try {
             $filePath = null;

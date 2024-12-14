@@ -31,7 +31,9 @@ Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 Route::post('/join-course', [CourseController::class, 'join']);
 Route::post('/leave-course', [CourseController::class, 'leave']);
-Route::post('/submit-submission', SubmitSubmissionController::class);
+
+Route::get('/submit-submission', [SubmitSubmissionController::class, "index"]);
+Route::post('/submit-submission', [SubmitSubmissionController::class, "submit"]);
 
 Route::get('/dashboard', DashboardController::class);
 
