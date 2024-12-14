@@ -12,8 +12,22 @@ use Illuminate\Support\Facades\Session;
 
 class OtpVerificationController extends Controller
 {
-    public function showForm()
+    public function showForm(Request $request)
     {
+        if (!Session::has('email')) {
+            return redirect()->route('auth.login')->with('error', 'Silakan login untuk mendapatkan kode OTP.');
+        }
+
+        $email = Session::get('email');
+        $cacheKey = 'otp_sent_' . $email;
+
+        if (!Cache::has($cacheKey)) {
+            $request['email'] = $email;
+            $this->resendOtp(new Request(['email' => $email]));
+
+            Cache::put($cacheKey, true, now()->addMinutes(30));
+        }
+
         return view('auth.verify-otp');
     }
 
@@ -75,7 +89,7 @@ class OtpVerificationController extends Controller
 
             Cache::put($cacheKey, now()->timestamp + 60, 60); // 1 menit
 
-            return redirect()->back()->with('success', 'Kode OTP baru telah dikirim ke email Anda.');
+            return redirect()->back()->with('success', 'Kode OTP telah dikirim ke email Anda.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Gagal mengirim ulang OTP: ' . $e->getMessage()]);
         }

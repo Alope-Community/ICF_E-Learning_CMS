@@ -73,9 +73,7 @@ class SubmissionResource extends Resource
                             : '-';
                     }),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -87,9 +85,7 @@ class SubmissionResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -111,6 +107,20 @@ class SubmissionResource extends Resource
             $user->hasRole('admin') ||
             ($user->hasRole('teacher') && $user->email_verified_at !== null)
         ), 403);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        /** @var \App\Models\User */
+        $user = auth()->user();
+
+        if ($user->hasRole('admin')) {
+            return parent::getEloquentQuery();
+        }
+
+        return parent::getEloquentQuery()->whereHas('course', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        });
     }
 
     protected static function shouldRegisterNavigation(): bool
@@ -138,15 +148,18 @@ class SubmissionResource extends Resource
         );
     }
 
-    public static function canCreate(): bool
+    public static function canView(Model $record): bool
     {
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+
+        return $record->course->user_id === $user->id;
     }
 
     public static function canEdit(Model $record): bool
@@ -154,10 +167,13 @@ class SubmissionResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+
+        return $record->course->user_id === $user->id;
     }
 
     public static function canDelete(Model $record): bool
@@ -165,9 +181,21 @@ class SubmissionResource extends Resource
         /** @var \App\Models\User */
         $user = auth()->user();
 
-        return $user && (
-            $user->hasRole('admin') ||
-            ($user->hasRole('teacher') && $user->email_verified_at !== null)
-        );
+
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+
+        return $record->course->user_id === $user->id;
+    }
+
+    public static function canCreate(): bool
+    {
+        /** @var \App\Models\User */
+        $user = auth()->user();
+
+
+        return $user && ($user->hasRole('admin') || $user->hasRole('teacher') && $user->email_verified_at !== null);
     }
 }

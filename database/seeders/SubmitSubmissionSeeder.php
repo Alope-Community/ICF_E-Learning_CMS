@@ -18,6 +18,7 @@ class SubmitSubmissionSeeder extends Seeder
                 'submission_id' => 1,
                 'body' => 'This is body',
                 'user_id' => 3,
+                'grade' => 90
             ]
         );
 
@@ -26,6 +27,7 @@ class SubmitSubmissionSeeder extends Seeder
                 'submission_id' => 2,
                 'body' => 'This is body',
                 'user_id' => 4,
+                'grade' => 60
             ]
         );
 
