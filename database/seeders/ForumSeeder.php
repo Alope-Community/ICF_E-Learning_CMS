@@ -16,15 +16,15 @@ class ForumSeeder extends Seeder
         $forums = [
             [
                 'course_id' => 2,
-                'title' => 'PBO itu untuk apa?'
+                'title' => 'Apakah kita harus belajar Bahasa Indonesia?'
             ],
             [
                 'course_id' => 2,
-                'title' => 'Apakah konsep PBO bisa digunakan di javascript?'
+                'title' => 'Apakah bahasa Indonesia sering dipakai di mancanegara?'
             ],
             [
                 'course_id' => 3,
-                'title' => 'Apakah masih worth it belajar html & css di zaman sekarang?'
+                'title' => 'Sejarah dunia apa yang hingga kini belum terungkap?'
             ],
         ];
 
