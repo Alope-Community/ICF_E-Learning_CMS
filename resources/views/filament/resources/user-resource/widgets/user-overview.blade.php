@@ -3,9 +3,16 @@
         <div class="space-y-4">
             {{-- Header --}}
             <div class="flex items-center space-x-3">
-                <div class="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                </div>
+                {{-- image  --}}
+                @if ($user->profile)
+                    <img src="{{ Storage::url($user->profile) }}" alt="Logo"
+                        class="h-12 w-12 rounded-full object-cover">
+                @else
+                    <div
+                        class="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    </div>
+                @endif
                 <h2 class="text-lg font-semibold text-gray-700">
                     User Details
                 </h2>

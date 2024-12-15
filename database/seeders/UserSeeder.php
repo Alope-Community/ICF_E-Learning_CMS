@@ -32,6 +32,16 @@ class UserSeeder extends Seeder
             ],
         );
 
+        $teacher2 = User::firstOrCreate(
+            ['name' => 'im teacher 2'],
+            [
+                'nuptk' => '1234123412341238',
+                'email' => 'teacher2@gmail.com',
+                'password' => bcrypt('foobarrr'),
+                'email_verified_at' => now(),
+            ],
+        );
+
         $student = User::firstOrCreate(
             ['name' => 'im student'],
             [

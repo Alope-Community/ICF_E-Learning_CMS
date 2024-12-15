@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             SubmissionSeeder::class,
             SubmitSubmissionSeeder::class,
+            ForumSeeder::class,
+            DiscussionSeeder::class,
         ]);
     }
 }

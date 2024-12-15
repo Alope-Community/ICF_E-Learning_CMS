@@ -77,7 +77,7 @@ class CourseResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->limit(30)
-                    ->tooltip(fn($record) => $record->description),
+                    ->tooltip(fn($record) => $record->title),
                 TextColumn::make('category.title'),
                 Tables\Columns\TextColumn::make('description')
                     ->limit(30)
@@ -134,7 +134,6 @@ class CourseResource extends Resource
             return parent::getEloquentQuery();
         }
 
-
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
@@ -147,7 +146,6 @@ class CourseResource extends Resource
         if ($user->hasRole('admin')) {
             return true;
         }
-
 
         return $record->user_id === $user->id;
     }
@@ -162,7 +160,6 @@ class CourseResource extends Resource
             return true;
         }
 
-
         return $record->user_id === $user->id;
     }
 
@@ -176,7 +173,6 @@ class CourseResource extends Resource
             return true;
         }
 
-
         return $record->user_id === $user->id;
     }
 
@@ -184,7 +180,6 @@ class CourseResource extends Resource
     {
         /** @var \App\Models\User */
         $user = auth()->user();
-
 
         return $user && ($user->hasRole('admin') || $user->hasRole('teacher') && $user->email_verified_at !== null);
     }

@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Forum extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'course_id',
+        'title',
+    ];
 
     public function course()
     {
