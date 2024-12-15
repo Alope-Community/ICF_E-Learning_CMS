@@ -47,6 +47,10 @@ class CourseResource extends Resource
                     ->relationship('category', 'title')
                     ->label('Category')
                     ->required(),
+                TextInput::make('course_code')
+                    ->default(fn() => \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(6)))
+                    ->unique(Course::class, 'course_code', fn($record) => $record)
+                    ->disabled(),
                 Select::make('students')
                     ->relationship('users', 'name', function ($query) {
                         $query->whereHas('roles', function ($roleQuery) {

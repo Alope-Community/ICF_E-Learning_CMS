@@ -48,14 +48,13 @@ class UserResource extends Resource
                     ->preload()
                     ->options(Permission::all()->pluck('name', 'id'))
                     ->label('Permissions'),
-
                 Forms\Components\FileUpload::make('profile')
                     ->nullable()
                     ->avatar()
                     ->preserveFilenames()
                     ->label('Avatar Profile')
                     ->directory('profile')
-                    // ->default($this->user->profile ?? null)
+                    ->default(fn($get) => $get('record')->profile ?? null)
                     ->panelAspectRatio('2:1')
                     ->enableDownload(),
             ]);

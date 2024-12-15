@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Course;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CourseSeeder extends Seeder
 {
@@ -20,7 +21,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pelajari dasar-dasar pemrograman menggunakan Python.',
                 'category_id' => 1,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Pemrograman Berorientasi Objek',
@@ -28,7 +30,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Mendalami konsep OOP menggunakan Java.',
                 'category_id' => 2,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Pengembangan Web dengan HTML & CSS',
@@ -36,7 +39,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Belajar membuat website menggunakan HTML dan CSS.',
                 'category_id' => 3,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'JavaScript untuk Pemula',
@@ -44,7 +48,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pelajari dasar-dasar JavaScript.',
                 'category_id' => 5,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Pengembangan Full-Stack',
@@ -52,7 +57,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Eksplor pengembangan full-stack dengan stack MERN.',
                 'category_id' => 6,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Struktur Data dan Algoritma',
@@ -60,7 +66,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Kuasi struktur data dan algoritma menggunakan C++.',
                 'category_id' => 7,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Pengembangan Aplikasi Mobile',
@@ -68,7 +75,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Bangun aplikasi mobile menggunakan Flutter.',
                 'category_id' => 8,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Pengembangan Backend dengan Node.js',
@@ -76,7 +84,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pelajari pemrograman backend menggunakan Node.js.',
                 'category_id' => 9,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Manajemen Basis Data',
@@ -84,7 +93,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pahami basis data relasional dengan SQL.',
                 'category_id' => 10,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Pengembangan API',
@@ -92,7 +102,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Bangun dan integrasikan API menggunakan Laravel.',
                 'category_id' => 11,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Kontrol Versi dengan Git',
@@ -100,7 +111,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pelajari Git dan GitHub untuk kontrol versi.',
                 'category_id' => 12,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Dasar-Dasar DevOps',
@@ -108,7 +120,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pahami dasar-dasar alat dan praktik DevOps.',
                 'category_id' => 13,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Dasar-Dasar Machine Learning',
@@ -116,7 +129,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pengenalan konsep Machine Learning menggunakan Python.',
                 'category_id' => 14,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Dasar-Dasar Keamanan Siber',
@@ -124,7 +138,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pelajari dasar-dasar pengamanan perangkat lunak dan jaringan.',
                 'category_id' => 15,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
             [
                 'title' => 'Komputasi Awan dengan AWS',
@@ -132,7 +147,8 @@ class CourseSeeder extends Seeder
                 'description' => 'Pengenalan komputasi awan menggunakan layanan AWS.',
                 'category_id' => 16,
                 'body' => '<p><strong>Ini adalah header</strong></p>',
-                'user_id' => 2
+                'user_id' => 2,
+                'course_code' => Str::upper(Str::random(6)),
             ],
         ];
 
