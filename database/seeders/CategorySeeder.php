@@ -13,133 +13,131 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $python = Category::firstOrCreate(
-            ['title' => 'Python'],
+        $matematika = Category::firstOrCreate(
+            ['title' => 'Matematika Dasar'],
             [
-                'slug' => 'python',
-                'description' => 'Python adalah bahasa pemrograman yang populer dan banyak digunakan.',
-            ]
-
-        );
-
-        $java = Category::firstOrCreate(
-            ['title' => 'Java'],
-            [
-                'slug' => 'java',
-                'description' => 'Java adalah bahasa pemrograman yang populer dan banyak digunakan untuk membuat aplikasi desktop dan mobile.',
+                'slug' => 'matematika-dasar',
+                'description' => 'Pelajari konsep dasar matematika yang penting untuk kehidupan sehari-hari.',
             ]
         );
-
-        $html = Category::firstOrCreate(
-            ['title' => 'HTML'],
+        
+        $bahasa_indonesia = Category::firstOrCreate(
+            ['title' => 'Bahasa Indonesia'],
             [
-                'slug' => 'html',
-                'description' => 'HTML adalah bahasa markup yang digunakan untuk membuat struktur dan kontent dari halaman web.',
+                'slug' => 'bahasa-indonesia',
+                'description' => 'Pahami tata bahasa dan keterampilan menulis dalam bahasa Indonesia.',
             ]
         );
-
-        $css = Category::firstOrCreate(
-            ['title' => 'CSS'],
+        
+        $sejarah_dunia = Category::firstOrCreate(
+            ['title' => 'Sejarah Dunia'],
             [
-                'slug' => 'css',
-                'description' => 'CSS adalah bahasa styling yang digunakan untuk membuat tampilan dan
-                desain dari halaman web.',
+                'slug' => 'sejarah-dunia',
+                'description' => 'Jelajahi peristiwa penting yang membentuk dunia kita saat ini.',
             ]
         );
-
-        $javascript = Category::firstOrCreate(
-            ['title' => 'JavaScript'],
+        
+        $pemrograman = Category::firstOrCreate(
+            ['title' => 'Pemrograman untuk Pemula'],
             [
-                'slug' => 'javascript',
-                'description' => 'JavaScript adalah bahasa pemrograman yang digunakan untuk membuat interaksi dinamis pada halaman web.',
+                'slug' => 'pemrograman-untuk-pemula',
+                'description' => 'Pelajari dasar-dasar pemrograman menggunakan Python.',
             ]
         );
-
-        $mern = Category::firstOrCreate(
-            ['title' => 'MERN'],
+        
+        $seni_kreativitas = Category::firstOrCreate(
+            ['title' => 'Seni dan Kreativitas'],
             [
-                'slug' => 'mern',
-                'description' => 'MERN adalah singkatan dari MongoDB, Express, React, dan Node.js, yang digunakan untuk membuat aplikasi web dinamis.',
+                'slug' => 'seni-dan-kreativitas',
+                'description' => 'Eksplorasi seni rupa, musik, dan kreativitas.',
             ]
         );
-
-        $cpp = Category::firstOrCreate(
-            ['title' => 'C++'],
+        
+        $ilmu_pengetahuan_alam = Category::firstOrCreate(
+            ['title' => 'Ilmu Pengetahuan Alam'],
             [
-                'slug' => 'cpp',
-                'description' => 'C++ adalah bahasa pemrograman yang digunakan untuk membuat aplikasi sistem operasi dan aplikasi desktop.',
+                'slug' => 'ilmu-pengetahuan-alam',
+                'description' => 'Pahami dasar-dasar fisika, kimia, dan biologi.',
             ]
         );
-
-        $flutter = Category::firstOrCreate(
-            ['title' => 'Flutter'],
+        
+        $komputasi = Category::firstOrCreate(
+            ['title' => 'Dasar-Dasar Komputasi'],
             [
-                'slug' => 'flutter',
-                'description' => 'Flutter adalah framework yang digunakan untuk membuat aplikasi mobile dan web dengan menggunakan bahasa pemrograman Dart.',
+                'slug' => 'dasar-dasar-komputasi',
+                'description' => 'Pengenalan konsep komputasi dan algoritma sederhana.',
             ]
         );
-
-        $nodejs = Category::firstOrCreate(
-            ['title' => 'Node.js'],
+        
+        $ekonomi = Category::firstOrCreate(
+            ['title' => 'Ekonomi Dasar'],
             [
-                'slug' => 'nodejs',
-                'description' => 'Node.js adalah framework yang digunakan untuk membuat aplikasi web dinamis dengan menggunakan bahasa pemrograman JavaScript.',
+                'slug' => 'ekonomi-dasar',
+                'description' => 'Pelajari prinsip-prinsip dasar ekonomi seperti permintaan dan penawaran.',
             ]
         );
-
-        $sql = Category::firstOrCreate(
-            ['title' => 'SQL'],
+        
+        $kewarganegaraan = Category::firstOrCreate(
+            ['title' => 'Kewarganegaraan'],
             [
-                'slug' => 'sql',
-                'description' => 'SQL adalah bahasa query yang digunakan untuk mengelola data pada database.',
+                'slug' => 'kewarganegaraan',
+                'description' => 'Pelajari tentang hak dan kewajiban sebagai warga negara.',
             ]
         );
-
-        $laravel = Category::firstOrCreate(
-            ['title' => 'Laravel'],
+        
+        $geografi = Category::firstOrCreate(
+            ['title' => 'Geografi'],
             [
-                'slug' => 'laravel',
-                'description' => 'Laravel adalah framework yang digunakan untuk membuat aplikasi web dinamis dengan menggunakan bahasa pemrograman PHP.',
+                'slug' => 'geografi',
+                'description' => 'Pahami fenomena alam dan hubungan manusia dengan lingkungannya.',
             ]
         );
-
-        $git = Category::firstOrCreate(
-            ['title' => 'Git'],
+        
+        $fisika = Category::firstOrCreate(
+            ['title' => 'Fisika Dasar'],
             [
-                'slug' => 'git',
-                'description' => 'Git adalah sistem kontrol versi yang digunakan untuk mengelola kode sumber dan riwayat perubahan kode.',
+                'slug' => 'fisika-dasar',
+                'description' => 'Pelajari prinsip dasar fisika seperti hukum Newton dan energi.',
             ]
         );
-
-        $devops = Category::firstOrCreate(
-            ['title' => 'DevOps'],
+        
+        $kimia = Category::firstOrCreate(
+            ['title' => 'Kimia Dasar'],
             [
-                'slug' => 'devops',
-                'description' => 'DevOps adalah praktek yang digunakan untuk meningkatkan efisiensi dan efektivitas dalam pengembangan dan pengelolaan aplikasi.',
+                'slug' => 'kimia-dasar',
+                'description' => 'Pelajari elemen kimia dan reaksi dasar yang sering dijumpai.',
             ]
         );
-
-        $ml = Category::firstOrCreate(
-            ['title' => 'Machine Learning'],
+        
+        $biologi = Category::firstOrCreate(
+            ['title' => 'Biologi Dasar'],
             [
-                'slug' => 'machine-learning',
-                'description' => 'Machine Learning adalah praktek yang digunakan untuk membuat model yang dapat belajar dari data dan membuat prediksi atau keputusan berdasarkan data tersebut.',
+                'slug' => 'biologi-dasar',
+                'description' => 'Pahami kehidupan dari skala mikroskopis hingga makhluk hidup kompleks.',
             ]
         );
-
-        $cybersecurity = Category::firstOrCreate(
-            ['title' => 'Cybersecurity'],
+        
+        $pemrograman_lanjutan = Category::firstOrCreate(
+            ['title' => 'Pemrograman Lanjutan'],
             [
-                'slug' => 'cybersecurity',
-                'description' => 'Cybersecurity adalah praktek yang digunakan untuk melindungi sistem komputer dan jaringan dari serangan dan ancaman keamanan.',
+                'slug' => 'pemrograman-lanjutan',
+                'description' => 'Tingkatkan kemampuan coding dengan struktur data dan algoritma.',
             ]
         );
-
-        $cloud = Category::firstOrCreate(
-            ['title' => 'Cloud Computing'],
+        
+        $teknologi_informasi = Category::firstOrCreate(
+            ['title' => 'Teknologi Informasi'],
             [
-                'slug' => 'cloud-computing',
-                'description' => 'Cloud Computing adalah praktek yang digunakan untuk menyimpan dan mengelola data dan aplikasi di internet.',
+                'slug' => 'teknologi-informasi',
+                'description' => 'Eksplorasi dasar teknologi informasi dan komunikasi.',
+            ]
+        );
+        
+        $keterampilan_hidup = Category::firstOrCreate(
+            ['title' => 'Keterampilan Hidup'],
+            [
+                'slug' => 'keterampilan-hidup',
+                'description' => 'Pelajari keterampilan praktis untuk kehidupan sehari-hari.',
             ]
         );
     }

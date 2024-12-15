@@ -17,7 +17,7 @@ class DiscussionSeeder extends Seeder
             [
                 'forum_id' => 1,
                 'user_id' => 2,
-                'message' => 'PBO biasa digunakan untuk membuat sebuah program dengan konsep yang berbasis objek.',
+                'message' => 'Bahasa Indonesia adalah bahasa primer kita, jadi penting untuk kita mempelajari Bahasa Indonesia.',
             ],
             [
                 'forum_id' => 1,
@@ -27,7 +27,7 @@ class DiscussionSeeder extends Seeder
             [
                 'forum_id' => 2,
                 'user_id' => 2,
-                'message' => 'Bisa saja.',
+                'message' => 'Sesekali Bahasa Indonesia dipelajari di negara-negara asing.',
             ]
         ];
 
