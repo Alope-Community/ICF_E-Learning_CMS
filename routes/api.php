@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\CourseController;
+use App\Http\Controllers\API\DiscussionController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\SubmitSubmissionController;
 // use App\Http\Controllers\CourseController;
@@ -38,4 +39,5 @@ Route::post('/submit-submission', [SubmitSubmissionController::class, "submit"])
 
 Route::get('/dashboard', DashboardController::class);
 Route::put('/profile', ProfileController::class);
+Route::post('/discussions', DiscussionController::class);
 
