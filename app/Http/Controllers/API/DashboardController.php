@@ -26,7 +26,7 @@ class DashboardController extends Controller
             return response()->json([
                 'code' => 'ICF-001',
                 'success' => true,
-                'message' => 'Join to Course Success',
+                'message' => 'Get Data Dashboard Success',
                 'result' => [
                     "courses" => $courses
                 ],

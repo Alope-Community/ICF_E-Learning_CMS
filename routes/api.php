@@ -3,7 +3,9 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\DashboardController;
-use App\Http\Controllers\CourseController;
+use App\Http\Controllers\API\CourseController;
+use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\SubmitSubmissionController;
 // use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +33,9 @@ Route::get('/courses/{id}', [CourseController::class, 'show']);
 Route::post('/join-course', [CourseController::class, 'join']);
 Route::post('/leave-course', [CourseController::class, 'leave']);
 
+Route::get('/submit-submission', [SubmitSubmissionController::class, "index"]);
+Route::post('/submit-submission', [SubmitSubmissionController::class, "submit"]);
+
 Route::get('/dashboard', DashboardController::class);
+Route::put('/profile', ProfileController::class);
 

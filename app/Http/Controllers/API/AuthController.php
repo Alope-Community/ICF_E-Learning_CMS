@@ -31,6 +31,7 @@ class AuthController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'avatar' => $user->profile,
         ];
         $token = JWTAuth::claims($customClaims)->fromUser($user);
     
@@ -52,7 +53,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password'  => 'required|string|min:8',
-            'password_confirmation' => 'required|string|same:password',
+            'confirmPassword' => 'required|string|same:password',
         ]);
         
         if ($validator->fails()) {
