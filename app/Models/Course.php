@@ -15,6 +15,7 @@ class Course extends Model
         'user_id',
         'description',
         'body',
+        'course_code'
     ];
 
     use HasFactory;
