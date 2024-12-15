@@ -58,10 +58,10 @@ php artisan key:generate
 
 ### Step 5: Run Database Migrations (If Applicable)
 
-If the project requires database migrations, run the following command to migrate the database:
+If the project requires database migrations and seeder, run the following command to migrate the database:
 
 ```bash
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
 ### Step 6: Serve the Application
@@ -77,3 +77,17 @@ And in another terminal, run the following command to start the Vite development
 ```bash
 npm run dev
 ```
+
+### Seeder for the login that has been provided
+
+1. Admin
+   email: admin@gmail.com
+   password: foobarrr
+
+2. Teacher
+   email: teacher@gmail.com
+   password: foobarrr
+
+3. Student
+   email: student@gmail.com
+   password: foobarrr
