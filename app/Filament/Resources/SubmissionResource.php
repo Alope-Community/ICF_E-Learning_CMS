@@ -34,10 +34,6 @@ class SubmissionResource extends Resource
                         $set('slug', \Illuminate\Support\Str::slug($state));
                     })
                     ->required(),
-                TextInput::make('slug')
-                    ->unique(Submission::class, 'slug', fn($record) => $record)
-                    ->disabled()
-                    ->maxLength(255),
                 Textarea::make('description')
                     ->columnSpanFull()
                     ->required(),
