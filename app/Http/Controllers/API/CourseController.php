@@ -110,7 +110,7 @@ class CourseController extends Controller
             if($course_id){
                 $course = Course::with("user")->find($request->course_id);
             } else if($code){
-                $course = Course::with("user")->whereCode($request->code)->first();
+                $course = Course::with("user")->whereCourseCode($request->code)->first();
             }
 
             $userID = $request->user_id;
