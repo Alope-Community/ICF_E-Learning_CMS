@@ -44,6 +44,16 @@ class UserProfile extends Page implements HasForms
     protected function getFormSchema(): array
     {
         return [
+            Forms\Components\FileUpload::make('profile')
+                ->nullable()
+                ->avatar()
+                ->preserveFilenames()
+                ->label('Avatar Profile')
+                ->directory('profile')
+                ->default($this->user->profile ?? null)
+                ->panelAspectRatio('2:1')
+                ->enableDownload(),
+
             Forms\Components\TextInput::make('name')
                 ->label('Name')
                 ->required()
@@ -55,15 +65,6 @@ class UserProfile extends Page implements HasForms
                 ->disabled()
                 ->default($this->user->email ?? ''),
 
-            Forms\Components\FileUpload::make('profile')
-                ->nullable()
-                ->avatar()
-                ->preserveFilenames()
-                ->label('Avatar Profile')
-                ->directory('profile')
-                ->default($this->user->profile ?? null)
-                ->panelAspectRatio('2:1')
-                ->enableDownload(),
         ];
     }
 
