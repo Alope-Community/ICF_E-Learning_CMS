@@ -19,7 +19,7 @@ class Forum extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function discussion()
+    public function discussions()
     {
         return $this->hasMany(Discussion::class);
     }

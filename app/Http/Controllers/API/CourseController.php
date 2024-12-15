@@ -71,7 +71,7 @@ class CourseController extends Controller
 
         try {
 
-            $course = Course::with("category")->with("submission")->with("user")->with("users")->whereSlug($slug)->first();
+            $course = Course::with("category")->with("submission")->with("user")->with("users")->with("forums.discussions")->whereSlug($slug)->first();
 
             if (!$course) {
                 throw new Exception("Course not found.", Response::HTTP_NOT_FOUND);
@@ -110,7 +110,7 @@ class CourseController extends Controller
             if($course_id){
                 $course = Course::with("user")->find($request->course_id);
             } else if($code){
-                $course = Course::with("user")->whereCode($request->code)->first();
+                $course = Course::with("user")->whereCourseCode($request->code)->first();
             }
 
             $userID = $request->user_id;
